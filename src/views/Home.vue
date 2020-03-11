@@ -6,13 +6,17 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import { AmplifyEventBus } from "aws-amplify-vue";
 export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
+  mounted() {
+    AmplifyEventBus.$on("authState", info => {
+      console.log("auth", info);
+      if (info === "signedIn") {
+        this.$router.push("about");
+      }
+    });
+  },
+  name: "home",
+  components: {}
 };
 </script>
